@@ -1,0 +1,9 @@
+@extends('layouts.app_home')
+@section('content')
+@include('Includes.home_header')
+@include('Includes.home_hero_banner')
+@include('Includes.home_latest_product')
+@include('Includes.home_collections')
+@include('Includes.home_hotest_product')
+@include('Includes.home_footer')
+@endsection  
