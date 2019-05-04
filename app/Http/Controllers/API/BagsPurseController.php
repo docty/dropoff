@@ -12,14 +12,23 @@ class BagsPurseController extends Controller
     
     public function index()
     {
-        return ProductResource::collection(BagsPurse::paginate());
+        //return ProductResource::collection(BagsPurse::paginate());
         return ProductResource::collection(BagsPurse::all());
     }
 
     
     public function store(Request $request)
     {
-        
+        $bags = new BagsPurse();
+        $bags->name = $request->productName;
+        $bags->price = $request->price;
+        $bags->filename = $request->filename;
+        $bags->type = $request->type;
+        $bags->description = $request->description;
+        $bags->save();
+       
+      
+        return 'Product Uploaded Successfully';
     }
 
     

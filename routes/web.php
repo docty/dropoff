@@ -46,4 +46,5 @@ Route::resource('/admin', 'AdminController')->except([
 ]);;
 Route::get('/admin/dashboard', 'AdminDashboardController@home')->name('admin.dashboard');
 Route::get('/admin/addproduct', 'AdminDashboardController@addProduct')->name('admin.addProduct');
+Route::post('/admin/saveproduct', 'AdminDashboardController@saveProduct')->name('admin.saveProduct');
 

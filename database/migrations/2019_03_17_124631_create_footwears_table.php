@@ -15,8 +15,8 @@ class CreateFootwearsTable extends Migration
     {
         Schema::create('footwears', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('product_id')->unsigned()->index();
-            $table->foreign('product_id')->references('id')->on('all_products')->onDelete('cascade');
+            //$table->bigInteger('product_id')->unsigned()->index();
+            //$table->foreign('product_id')->references('id')->on('all_products')->onDelete('cascade');
             $table->char('name', 255);
             $table->char('price', 255);
             $table->text('filename');

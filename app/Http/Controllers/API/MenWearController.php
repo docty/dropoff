@@ -20,7 +20,16 @@ class MenWearController extends Controller
     
     public function store(Request $request)
     {
-        
+        $menwear = new ManWear();
+        $menwear->name = $request->productName;
+        $menwear->price = $request->price;
+        $menwear->filename = $request->filename;
+        $menwear->type = $request->type;
+        $menwear->description = $request->description;
+        $menwear->save();
+       
+      
+        return 'Product Uploaded Successfully';
     }
 
     

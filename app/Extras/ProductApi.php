@@ -2,7 +2,8 @@
 
 namespace App\Extras;
 
-
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 class ProductApi 
 {
 	
@@ -47,6 +48,33 @@ class ProductApi
 		$response = $request->getBody()->getContents();
 		$php_json = json_decode($response, true);
 		return $php_json;
+	}
+
+	public function storeProduct($request)
+	{
+		$productImage = $request->file('productImage');
+		$extension = $productImage->getClientOriginalExtension();
+		$filename = $productImage->getFilename().'.'.$extension;
+		$client = new \GuzzleHttp\Client();
+		$url = 'http://dropoff.test/api/product/'.$request->category;
+		
+		$response = $client->post($url, [
+    		'form_params' => [
+        		'productName' => $request->productName,
+        		'price' => $request->price,
+        		'filename' => $filename,
+        		'type' => $request->type,
+        		'description' => $request->description,
+        		
+        	],
+		]);
+
+	  	
+       
+        Storage::disk('public')->put($request->category.'/'.$filename,  File::get($productImage));
+	return $response;
+
+		
 	}
 }
 

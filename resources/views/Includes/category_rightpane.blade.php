@@ -10,7 +10,7 @@
   								  	 <button id="adam" onclick="addToCart('{{$product['name']}}', {{$product['price']}}, '{{$product['filename']}}')"  style="width: 100%; "><span>ADD TO CART</span></button>
   								  </a> 
   								  <!-- <a href="#" class="wishlist-btn"><i class="flaticon-heart"></i></a> -->
-							
+	 						
 							</div>
 						</div>
 				   

@@ -19,7 +19,16 @@ class WomenWearController extends Controller
    
     public function store(Request $request)
     {
+        $womenwear = new WomanWear();
+        $womenwear->name = $request->productName;
+        $womenwear->price = $request->price;
+        $womenwear->filename = $request->filename;
+        $womenwear->type = $request->type;
+        $womenwear->description = $request->description;
+        $womenwear->save();
        
+      
+        return 'Product Uploaded Successfully';
     }
 
     
