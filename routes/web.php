@@ -43,8 +43,10 @@ Route::get('/about', function () {
 
 Route::resource('/admin', 'AdminController')->except([
     'show', 'update', 'destroy'
-]);;
+]); 
 Route::get('/admin/dashboard', 'AdminDashboardController@home')->name('admin.dashboard');
 Route::get('/admin/addproduct', 'AdminDashboardController@addProduct')->name('admin.addProduct');
+Route::get('/admin/order', 'AdminDashboardController@order')->name('admin.order');
 Route::post('/admin/saveproduct', 'AdminDashboardController@saveProduct')->name('admin.saveProduct');
+
 

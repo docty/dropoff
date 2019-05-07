@@ -20,7 +20,9 @@ class CreateCartsTable extends Migration
             $table->char('quantity', 255);
             $table->char('price', 255);
             $table->text('filename');
+            $table->text('description');
             $table->char('email', 255);
+            $table->char('status', 255)->default('processed');
             $table->timestamps();
         });
     }
