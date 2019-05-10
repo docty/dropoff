@@ -17,7 +17,10 @@
                             <a href="{{route('admin.addProduct')}}">
                                 <i class="fas fa-chart-bar"></i>Add Product</a>
                         </li>
-                        
+                        <li>
+                            <a href="{{route('admin.latestProduct')}}">
+                                <i class="fas fa-chart-bar"></i>Latest Product</a>
+                        </li>
                         <li>
                             <a href="{{route('admin.order')}}">
                                 <i class="fas fa-table"></i>Order</a>
