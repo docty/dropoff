@@ -35,38 +35,27 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                <?php  $i = 1;?>
                                             `@foreach ($cart as $carto)
-                                                @foreach ($carto as $carts)
+                                                @foreach ($carto as $key => $carts)
                                                 <tr class="tr-shadow">
-                                                    
+                                                     
                                                     <td>{{$carts->name}}</td>
-                                                    <input hidden type="text" name="name" value="{{$carts->name}}">
-                                                    <td >{{$carts->type}}</td>
+                                                    <input hidden type="text" name="name" value="{{$carts->name.';'.$carts->price.';'.$carts->filename}}">
+                                                    <td >{{$i}}</td>
                                                     <td class="desc">{{$carts->price}} GHC</td>
                                                     
                                                     <td>
                                                         <label class="au-checkbox">
-                                                            <input type="checkbox">
+                                                            <input type="checkbox" name="{{$i= $i+1}}">
                                                             <span class="au-checkmark"></span>
                                                         </label>
                                                     </td>
                                                     
-                                                   <!-- <td>
-                                                        <div class="table-data-feature">
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Send">
-                                                                <i class="zmdi zmdi-mail-send"></i>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Edit">
-                                                                <i class="zmdi zmdi-edit"></i>
-                                                            </button>
-                                                            <button class="item" data-toggle="tooltip" data-placement="top" title="" data-original-title="Delete">
-                                                                <i class="zmdi zmdi-delete"></i>
-                                                            </button>
-                                                            
-                                                        </div>
-                                                    </td> -->
+                                                   
                                                 </tr>
                                                 <tr class="spacer"></tr>
+                                                
                                                 @endforeach
                                             @endforeach
                                                 

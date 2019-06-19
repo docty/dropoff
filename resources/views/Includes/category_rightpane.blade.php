@@ -4,7 +4,7 @@
 	        <div class="col-lg-4 col-md-6">
 				<div class="product-item"> 
 					 <div class="pi-pic">
-					 	<a href="/category/<?php echo $product['id'].'?q='.$query ?>"><img src="./images/product/{{$product['filename']}}" alt=""></a>
+					 	<a href="/category/<?php echo $product['id'].'?q='.$query ?>"><img src="./uploads/{{$query}}/{{$product['filename']}}" alt=""></a>
 							<div class="pi-links">
 								  <a   class="add-card"><i class="flaticon-bag"></i>
   								  	 <button id="adam" onclick="addToCart('{{$product['name']}}', {{$product['price']}}, '{{$product['filename']}}')"  style="width: 100%; "><span>ADD TO CART</span></button>

@@ -25,16 +25,16 @@ var formData = new FormData(this);
   });
 
 
-
- 	  
-
-
- 	});
+});
 
 
 
+ $('input[type=checkbox]').change(function(){
+ var we = $('input[type=checkbox]').attr('name');
+alert(we);
+ var str = $(we).val();
+    //alert(str);
 
-
-
+  }); 
 
 });
