@@ -6,7 +6,7 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    
+
     <title>{{ config('app.name', 'DROP OFF') }}</title>
 
 
@@ -23,17 +23,17 @@
 	<link href="{{ asset('css/animate.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/jquery-ui.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('css/slicknav.min.css') }}" rel="stylesheet">
-    
-    
+
+
 
 </head>
 <body>
-    <div id="container">
-            @yield('content')
+    <div id="root">
+             
     </div>
 </body>
- 
- 
+
+
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
 <script src="{{ asset('js/jquery.slicknav.min.js') }}" defer></script>
@@ -43,8 +43,8 @@
 <script src="{{ asset('js/jquery-ui.min.js') }}" defer></script>
 <script src="{{ asset('js/main.js') }}" defer></script>
 <script src="{{ asset('js/angular.js') }}" defer></script>
-    
-<!- Personal Scripts -->
+
+<!-- Personal Scripts -->
 @stack('extScript')
 <script src="{{ asset('js/cart.js') }}" defer type="text/javascript"></script>
 
