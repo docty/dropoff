@@ -11,8 +11,6 @@
 
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/flaticon.css') }}" rel="stylesheet">
 
@@ -29,7 +27,7 @@
 </head>
 <body>
     <div id="root">
-             
+
     </div>
 </body>
 

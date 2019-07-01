@@ -15,11 +15,15 @@ Route::get('/', function () {
     return view('layouts/app_home');
 });
 
+Route::get('/category', function () {
+    return view('layouts/app_home');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::get('/category', 'PageController@category')->name('category');
+//Route::get('/category', 'PageController@category')->name('category');
 Route::get('/category/{showitem}', 'PageController@showProduct')->name('showproduct');
 Route::get('/cart', 'PageController@cart')->middleware('auth');
 Route::get('/checkout', 'PageController@checkout');
@@ -36,7 +40,7 @@ Route::get('/contact', function () {
 });
 
 Route::get('/about', function () {
-    return view('about');
+    return 'about';
 });
 
 //Admin Server
