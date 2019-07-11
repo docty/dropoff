@@ -8,34 +8,34 @@ use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
-     	
+
 
      	public function addToCart(Request $request){
-     	 	
+
 		$cart = new Cart();
 		$cart->name = $request->name;
 		$cart->size = $request->size;
 		$cart->quantity = $request->quantity;
 		$cart->price = $request->price;
 		$cart->filename = $request->filename;
-		$cart->email = Auth::user()->email;
-		$cart->save();
-		return "Cart successfully Added";
+		//$cart->email = Auth::user()->email;
+		//$cart->save();
+		return "Added successfully";
 		//return redirect()->route('category')->withCartAdd(__('Cart successfully added.'));
-		
-	} 
+
+	}
 
 
 	public function placeOrder(Request $request)
 	{
 		$read = Cart::where('email', Auth::user()->email)->get();
-		$cover = array() ; 
+		$cover = array() ;
 		foreach ($read as $value) {
-			$list = array(); 
+			$list = array();
 			array_push($list, ['name' =>$value->name], ['price' =>$value->price]);
 			array_push($cover, $list);
 		}
-		
+
 
 		$billing = new BillingAddress();
 		$billing->email =  Auth::user()->email;
@@ -53,10 +53,10 @@ class CartController extends Controller
 
 
 	public function getBillingInfo()
-	{	
-		
+	{
 
-		
+
+
 		return BillingAddress::where('email', Auth::user()->email )->get();
 	}
-} 
+}

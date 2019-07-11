@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//e98058502ff10abb15fcf3fe17d22188
 Route::get('/', function () {
     return view('layouts/app_home');
 });
@@ -19,12 +19,16 @@ Route::get('/category', function () {
     return view('layouts/app_home');
 });
 
+Route::get('/category/{product}', function () {
+    return view('layouts/app_home');
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/category', 'PageController@category')->name('category');
-Route::get('/category/{showitem}', 'PageController@showProduct')->name('showproduct');
+//Route::get('/category/{showitem}', 'PageController@showProduct')->name('showproduct');
 Route::get('/cart', 'PageController@cart')->middleware('auth');
 Route::get('/checkout', 'PageController@checkout');
 

@@ -2,10 +2,10 @@
 	use App\Extras\ProductApi;
 	$productapi = new ProductApi();
 		if(isset($_GET['q'])){
-			
+
 			$sql = $_GET['q'];
 		}
-			
+
     		$results = $productapi->singleQuery($sql, $id);
 ?>
 
@@ -16,7 +16,7 @@
 <!-- Page info -->
 	<div class="page-top-info">
 		<div class="container">
-			<h4>Category PAge</h4>
+			<h4>Category Page</h4>
 			<div class="site-pagination">
 				<a href="">Home</a> /
 				<a href="">Shop</a>

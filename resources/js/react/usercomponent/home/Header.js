@@ -4,9 +4,9 @@ class Header extends React.Component {
   render() {
     return (
       <header className="header-section">
-        <div class="header-top">
-  			   <div class="container">
-  				     <div class="row">
+        <div className="header-top">
+  			   <div className="container">
+  				     <div className="row">
                    <div className="col-lg-2 text-center text-lg-left">
                       <a href="/" className="site-logo">
                        <img src="images/logo.png" alt=""/>
@@ -37,7 +37,7 @@ class Header extends React.Component {
             </div>
           </div>
           <nav className="main-navbar">
-      			<div class="container">
+      			<div className="container">
 
       				<ul className="main-menu">
       					<li><a href="/">Home</a></li>

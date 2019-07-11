@@ -10,19 +10,58 @@ class Category extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      category : "",
-      type : ""
+      info : { data : []},
     }
-    this.itemClickHandler = this.itemClickHandler.bind(this)
+
+    this.itemClickHandler = this.itemClickHandler.bind(this);
+    this.fetchData = this.fetchData.bind(this);
+    this.cartHandler = this.cartHandler.bind(this);
   }
+
+
+  componentWillMount() {
+
+      this.fetchData('footwear', 'footwear')
+
+  }
+
 
   itemClickHandler(category, type) {
-    this.setState({
-      category : category,
-      type : type
-    });
+    this.fetchData(category, type)
 
   }
+
+
+  fetchData(category, type){
+
+      axios.get('api/product/'+category+'?type='+type)
+            .then(response => {
+                  this.setState({
+                      info : response.data
+                  });
+
+            })
+            .catch(error => {
+              console.log(error);
+            });
+  }
+
+cartHandler(item){
+
+  axios.post('/addcart',{
+    name: item.name,
+    price: item.price,
+    filename: item.filename,
+    quantity : 1,
+    size : 'M'
+  })
+    .then(function (response){
+     alert(response.data);
+    })
+    .catch( function (error){
+      // Describe error!
+    });
+}
 
   render() {
     return (
@@ -42,7 +81,7 @@ class Category extends React.Component {
             <div className="container">
               <div className="row">
               <LeftCategory itemClickHandler={this.itemClickHandler}/>
-              <RightCategory queryValue={this.state}/>
+              <RightCategory queryValue={this.state.info.data} cartHandler={this.cartHandler}/>
 
               </div>
             </div>
