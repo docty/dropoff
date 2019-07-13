@@ -1,9 +1,8 @@
 import React from 'react'
 import Header from './home/Header'
 import Footer from './home/Footer'
-//import LeftProduct from './product/LeftProduct'
+import Leftroduct from './product/LeftProduct'
 import RightProduct from './product/RightProduct'
-
 
 
 
@@ -14,8 +13,8 @@ class Product extends React.Component {
     constructor(props){
         super(props);
         this.state = {
-            info :   [],
-            data : [{a:"1"}, {b:"2"}]
+            data :   []
+
         }
 
         this.fetchData = this.fetchData.bind(this);
@@ -32,7 +31,10 @@ class Product extends React.Component {
 
         axios.get('/api/product/'+type+'/'+id)
           .then(response => {
-              console.log(response.data.data);
+
+              this.setState({
+                  data : response.data.data
+              });
           })
           .catch(error =>{
             console.log(error);
@@ -61,7 +63,8 @@ class Product extends React.Component {
           				<a href="/category"> &lt;&lt; Back to Category</a>
           			</div>
           			<div className="row">
-                        <RightProduct onItemValue={this.state.info.data}/>
+                         <Leftroduct/>
+                        <RightProduct items= {this.state.data}/>
           			</div>
           		</div>
           	</section>

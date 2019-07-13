@@ -12,11 +12,15 @@ class RightProduct extends React.Component {
     return (
       <div>
       <div className="col-lg-6 product-details">
-            {this.props.onItemValue.map(item => { }) }
-             <h2 className="p-title"> name</h2>
-             <h3 className="p-price">GHCh  dsd </h3>
-             <h4 className="p-stock">Available: <span>In Stock</span></h4>
+             {this.props.items.map(value => {
 
+          return(    <div key={value.id}>
+                 <h2 className="p-title"> {value.name}</h2>
+                 <h3 className="p-price"> {value.price} </h3>
+                 <h4 className="p-stock"> Available: <span>In Stock</span></h4>
+             </div>)
+             })
+            }
 
 
           <div className="p-rating">

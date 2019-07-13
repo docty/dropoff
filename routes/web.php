@@ -22,14 +22,16 @@ Route::get('/category', function () {
 Route::get('/category/{product}', function () {
     return view('layouts/app_home');
 });
-
+Route::get('/cart', function () {
+    return view('layouts/app_home');
+});
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/category', 'PageController@category')->name('category');
 //Route::get('/category/{showitem}', 'PageController@showProduct')->name('showproduct');
-Route::get('/cart', 'PageController@cart')->middleware('auth');
+//Route::get('/cart', 'PageController@cart')->middleware('auth');
 Route::get('/checkout', 'PageController@checkout');
 
 
