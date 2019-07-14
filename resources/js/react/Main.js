@@ -5,6 +5,7 @@ import Homepage from './usercomponent/Homepage'
 import Category from './usercomponent/Category'
 import Product from './usercomponent/Product'
 import Cart from './usercomponent/Cart'
+import Checkout from './usercomponent/Checkout'
 import Login from './Login'
 
 
@@ -18,6 +19,7 @@ const routing = (
                <Route path='/category/:type' component={Product}/>
                <Route path='/login' component={Login}/>
                <Route path='/cart' component={Cart}/>
+               <Route path='/checkout' component={Checkout}/>
            </Switch>
        </Router>
 
