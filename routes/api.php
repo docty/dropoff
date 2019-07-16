@@ -17,12 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('/allproduct', 'AllProductsController');
+Route::apiResource('/product', 'AllProductsController');
+Route::get('/product/display/latest_product', 'AllProductsController@getLatestProduct');
+Route::get('/product/{product}/{id}', 'AllProductsController@getSpecificProduct');
 
-Route::group(['prefix' => 'product'], function() {
-    Route::apiResource('/womenwear', 'API\WomenWearController');
-    Route::apiResource('/menwear', 'API\MenWearController');
-    Route::apiResource('/footwear', 'API\FootWearController');
-    Route::apiResource('/bags', 'API\BagsPurseController');
-});
- 
+// Route::group(['prefix' => 'product'], function() {
+//     Route::apiResource('/womenwear', 'API\WomenWearController');
+//     Route::apiResource('/menwear', 'API\MenWearController');
+//     Route::apiResource('/footwear', 'API\FootWearController');
+//     Route::apiResource('/bags', 'API\BagsPurseController');
+// });

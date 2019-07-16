@@ -3,6 +3,7 @@ import React from 'react'
 
 class LeftCart extends React.Component {
   render() {
+    let counter = 0;
     return (
 
 
@@ -20,34 +21,46 @@ class LeftCart extends React.Component {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td className="product-col">
-                  <img src="images/product/1.jpg" alt="Product"/>
-                  <div className="pc-title">
-                    <h4>Name</h4>
-                    <p>GHC 120</p>
-                  </div>
-                </td>
-                <td className="quy-col">
-                  <div className="quantity">
-                      <div className="pro-qty">
-                      <input type="text" defaultValue="1"/>
-                    </div>
-                  </div>
-                </td>
-                <td className="size-col"><h4>Size M</h4></td>
-                <td className="total-col"><h4>GHC 45</h4></td>
-              </tr>
+              {this.props.items.map(value => {
+
+              return (
+                  <tr key={value.id}>
+                      <td className="product-col">
+                        <img src={"images/product/"+value.filename} alt="Product"/>
+                        <div className="pc-title">
+                          <h4>{value.name}</h4>
+                          <p>GHC {value.price}</p>
+                        </div>
+                      </td>
+                      <td className="quy-col">
+                        <div className="quantity">
+                            <div className="pro-qty">
+                            <input type="text" defaultValue="1"/>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="size-col"><h4>Size {value.size}</h4></td>
+                      <td className="total-col"><h4>GHC {value.price * value.quantity}</h4></td>
+                </tr>
+              )
+              })}
               </tbody>
           </table>
           </div>
           <div className="total-cost">
-            <h6>Total <span>GHC find</span></h6>
+            {
+
+              this.props.items.map(value => {
+                counter = counter + value.price
+            })
+          }
+            <h6>Total <span>GHC {counter}</span></h6>
+
           </div>
         </div>
       </div>
 
-    
+
     );
   }
 }

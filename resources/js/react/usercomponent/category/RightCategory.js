@@ -29,7 +29,7 @@ cartHandler(item){
                 return (<div className="col-lg-4 col-md-6" key={item.id}>
                   <div className="product-item">
                       <div className="pi-pic">
-                          <a href={"/category/footwear"+"?id="+item.id}><img src={'./images/product/'+item.filename} alt="Product"/></a>
+                          <a href={"/category/"+item.category+"?id="+item.id}><img src={'./images/product/'+item.filename} alt="Product"/></a>
                           <div className="pi-links">
                               <a className="add-card"><i className="flaticon-bag"></i>
                                     <button  onClick={() => this.cartHandler(item)} style={{width: '100%'}}><span>ADD TO CART</span></button>

@@ -10,6 +10,11 @@ class CartController extends Controller
 {
 
 
+		public function getCart()
+		{
+					return Cart::where('email', 'docty@test.com')->get();
+		}
+
      	public function addToCart(Request $request){
 
 		$cart = new Cart();
@@ -18,8 +23,11 @@ class CartController extends Controller
 		$cart->quantity = $request->quantity;
 		$cart->price = $request->price;
 		$cart->filename = $request->filename;
+		$cart->description = $request->description;
 		//$cart->email = Auth::user()->email;
-		//$cart->save();
+		$cart->email = $request->email;
+
+		$cart->save();
 		return "Added successfully";
 		//return redirect()->route('category')->withCartAdd(__('Cart successfully added.'));
 

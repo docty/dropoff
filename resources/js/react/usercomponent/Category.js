@@ -21,7 +21,7 @@ class Category extends React.Component {
 
   componentWillMount() {
 
-      this.fetchData('footwear', 'footwear')
+      this.fetchData('footwear', 'none')
 
   }
 
@@ -33,12 +33,12 @@ class Category extends React.Component {
 
 
   fetchData(category, type){
-
-      axios.get('api/product/'+category+'?type='+type)
+      let query = 'api/product/'+category+'?type='+type
+      axios.get(query)
             .then(response => {
-                  this.setState({
-                      info : response.data
-                  });
+              this.setState({
+                  info : response.data
+              });
 
             })
             .catch(error => {
@@ -50,13 +50,15 @@ cartHandler(item){
 
   axios.post('/addcart',{
     name: item.name,
+    size : 'M',
+    quantity : '1',
     price: item.price,
     filename: item.filename,
-    quantity : 1,
-    size : 'M'
-  })
+    description: item.description,
+    email : 'docty@test.com'
+   })
     .then(function (response){
-     alert(response.data);
+     console.log(response.data);
     })
     .catch( function (error){
       // Describe error!

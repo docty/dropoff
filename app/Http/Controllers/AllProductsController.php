@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class AllProductsController extends Controller
 {
-     
+
     function __construct()
     {
         //$this->middleware('auth:api');
@@ -15,9 +15,14 @@ class AllProductsController extends Controller
 
     public function index()
     {
+        $data =   ProductResource::collection(AllProducts::all());
+        return response()->json($data);
 
-
-       $data =   ProductResource::collection(AllProducts::all());
+    }
+    // Get the latest Product
+    public function getLatestProduct()
+    {
+        $data =   ProductResource::collection(AllProducts::orderBy('id', 'desc')->latest()->limit(4)->get());
         return response()->json($data);
 
     }
@@ -46,10 +51,20 @@ class AllProductsController extends Controller
 return json_decode((string) $response->getBody(), true)['access_token'];
     }
 
-       
+
     public function show($id, AllProducts $allProducts)
     {
-        return ProductResource::collection(AllProducts::where('id', $id )->get());
+        if (isset($_GET['type'])) {
+        $type = $_GET['type'];
+        if($type == 'none')
+            return ProductResource::collection(AllProducts::where('category', $id)->get());
+        else
+            return ProductResource::collection(AllProducts::where(['category'=> $id, 'type'=> $type])->get());
+        }
+    }
+    public function getSpecificProduct($category, $id)
+    {
+        return ProductResource::collection(AllProducts::where(['category'=> $category, 'id'=> $id])->get());
     }
 
 

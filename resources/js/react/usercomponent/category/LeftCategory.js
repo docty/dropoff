@@ -8,7 +8,7 @@ class LeftCategory extends React.Component {
 
 
     this.itemClickHandler = this.itemClickHandler.bind(this);
-    
+
   }
 
 
@@ -40,8 +40,8 @@ render() {
                       <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('menwear', 'max')}>Maxi Dresses</a></li>
                       <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('menwear', 'prom')}>Prom Dresses</a></li>
                     </ul></li>
-                  <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('bags', 'bagswear')}  id="bags">Bags & Purses</a></li>
-                  <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('footwear', 'footwear')} id="footwear">Footwear</a></li>
+                  <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('bagpurse', 'none')}  id="bags">Bags & Purses</a></li>
+                  <li><a href="javascript: void(0)" onClick={() =>  this.itemClickHandler('footwear', 'none')} id="footwear">Footwear</a></li>
                 </ul>
               </div>
         </div>

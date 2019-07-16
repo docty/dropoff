@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAllProductsTable extends Migration
+class CreateLatestArrivalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateAllProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('all_products', function (Blueprint $table) {
+        Schema::create('latest_arrivals', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->char('name', 255);
-            $table->char('price', 255);
-            $table->text('filename');
-            $table->char('category');
-            $table->char('type');
             $table->text('description');
+            $table->text('filename');
+            $table->char('price', 191);
+            $table->integer('banner');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateAllProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('all_products');
+        Schema::dropIfExists('latest_arrivals');
     }
 }

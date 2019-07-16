@@ -31,10 +31,10 @@ class Product extends React.Component {
 
         axios.get('/api/product/'+type+'/'+id)
           .then(response => {
-
-              this.setState({
-                  data : response.data.data
-              });
+            console.log(response.data.data);
+             this.setState({
+                 data : response.data.data
+             });
           })
           .catch(error =>{
             console.log(error);

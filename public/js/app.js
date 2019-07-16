@@ -60963,7 +60963,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
+/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65715,13 +65715,32 @@ var Cart =
 function (_React$Component) {
   _inherits(Cart, _React$Component);
 
-  function Cart() {
+  function Cart(props) {
+    var _this;
+
     _classCallCheck(this, Cart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Cart).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Cart).call(this, props));
+    _this.state = {
+      data: []
+    };
+    return _this;
   }
 
   _createClass(Cart, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      axios.get('/getcartItems').then(function (response) {
+        _this2.setState({
+          data: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -65740,7 +65759,9 @@ function (_React$Component) {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_LeftCart__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_RightCart__WEBPACK_IMPORTED_MODULE_4__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_LeftCart__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        items: this.state.data
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_RightCart__WEBPACK_IMPORTED_MODULE_4__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 
@@ -65815,7 +65836,7 @@ function (_React$Component) {
   _createClass(Category, [{
     key: "componentWillMount",
     value: function componentWillMount() {
-      this.fetchData('footwear', 'footwear');
+      this.fetchData('footwear', 'none');
     }
   }, {
     key: "itemClickHandler",
@@ -65827,7 +65848,8 @@ function (_React$Component) {
     value: function fetchData(category, type) {
       var _this2 = this;
 
-      axios.get('api/product/' + category + '?type=' + type).then(function (response) {
+      var query = 'api/product/' + category + '?type=' + type;
+      axios.get(query).then(function (response) {
         _this2.setState({
           info: response.data
         });
@@ -65840,12 +65862,14 @@ function (_React$Component) {
     value: function cartHandler(item) {
       axios.post('/addcart', {
         name: item.name,
+        size: 'M',
+        quantity: '1',
         price: item.price,
         filename: item.filename,
-        quantity: 1,
-        size: 'M'
+        description: item.description,
+        email: 'docty@test.com'
       }).then(function (response) {
-        alert(response.data);
+        console.log(response.data);
       })["catch"](function (error) {// Describe error!
       });
     }
@@ -65924,13 +65948,32 @@ var Checkout =
 function (_React$Component) {
   _inherits(Checkout, _React$Component);
 
-  function Checkout() {
+  function Checkout(props) {
+    var _this;
+
     _classCallCheck(this, Checkout);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(Checkout).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Checkout).call(this, props));
+    _this.state = {
+      data: []
+    };
+    return _this;
   }
 
   _createClass(Checkout, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      axios.get('/getcartItems').then(function (response) {
+        _this2.setState({
+          data: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Header__WEBPACK_IMPORTED_MODULE_1__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -65949,7 +65992,9 @@ function (_React$Component) {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_LeftCheckout__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_RightCheckout__WEBPACK_IMPORTED_MODULE_4__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_LeftCheckout__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_RightCheckout__WEBPACK_IMPORTED_MODULE_4__["default"], {
+        items: this.state.data
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
   }]);
 
@@ -66097,6 +66142,8 @@ function (_React$Component) {
       var _this2 = this;
 
       axios.get('/api/product/' + type + '/' + id).then(function (response) {
+        console.log(response.data.data);
+
         _this2.setState({
           data: response.data.data
         });
@@ -66185,6 +66232,7 @@ function (_React$Component) {
   _createClass(LeftCart, [{
     key: "render",
     value: function render() {
+      var counter = 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66199,29 +66247,35 @@ function (_React$Component) {
         className: "size-th"
       }, "Size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "total-th"
-      }, "Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "product-col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "images/product/1.jpg",
-        alt: "Product"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pc-title"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GHC 120"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "quy-col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "quantity"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pro-qty"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text",
-        defaultValue: "1"
-      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "size-col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Size M")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-        className: "total-col"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "GHC 45")))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.props.items.map(function (value) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
+          key: value.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "product-col"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "images/product/" + value.filename,
+          alt: "Product"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pc-title"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, value.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GHC ", value.price))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "quy-col"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "quantity"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pro-qty"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text",
+          defaultValue: "1"
+        })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "size-col"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Size ", value.size)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "total-col"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "GHC ", value.price * value.quantity)));
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "total-cost"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Total ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "GHC find")))));
+      }, this.props.items.map(function (value) {
+        counter = counter + value.price;
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Total ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "GHC ", counter)))));
     }
   }]);
 
@@ -66418,13 +66472,13 @@ function (_React$Component) {
       }, "Prom Dresses")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "javascript: void(0)",
         onClick: function onClick() {
-          return _this2.itemClickHandler('bags', 'bagswear');
+          return _this2.itemClickHandler('bagpurse', 'none');
         },
         id: "bags"
       }, "Bags & Purses")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "javascript: void(0)",
         onClick: function onClick() {
-          return _this2.itemClickHandler('footwear', 'footwear');
+          return _this2.itemClickHandler('footwear', 'none');
         },
         id: "footwear"
       }, "Footwear")))));
@@ -66507,7 +66561,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pi-pic"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-          href: "/category/footwear" + "?id=" + item.id
+          href: "/category/" + item.category + "?id=" + item.id
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
           src: './images/product/' + item.filename,
           alt: "Product"
@@ -66551,6 +66605,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -66559,9 +66615,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -66574,13 +66630,23 @@ var LeftCheckout =
 function (_React$Component) {
   _inherits(LeftCheckout, _React$Component);
 
-  function LeftCheckout() {
+  function LeftCheckout(props) {
+    var _this;
+
     _classCallCheck(this, LeftCheckout);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LeftCheckout).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LeftCheckout).call(this, props));
+    _this.state = {};
+    _this.onValueChange = _this.onValueChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(LeftCheckout, [{
+    key: "onValueChange",
+    value: function onValueChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66624,29 +66690,32 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "address",
-        placeholder: "Address"
+        placeholder: "Address",
+        onChange: this.onValueChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "region",
-        placeholder: "Region"
+        placeholder: "Region",
+        onChange: this.onValueChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "country",
-        placeholder: "Country"
+        placeholder: "Country",
+        onChange: this.onValueChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "number",
-        placeholder: "Phone Number"
+        placeholder: "Phone Number",
+        onChange: this.onValueChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "email",
-        value: "{{Auth::user()->email}}",
-        disabled: true,
-        placeholder: "Email Address"
+        placeholder: "Email Address",
+        onChange: this.onValueChange
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cf-title"
       }, "Delievery Info"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66774,22 +66843,29 @@ function (_React$Component) {
   _createClass(RightCheckout, [{
     key: "render",
     value: function render() {
+      var counter = 0;
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-4 order-1 order-lg-2"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "checkout-cart"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "Your Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "product-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pl-thumb"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "images/product/1.jpg",
-        alt: ""
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, " name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GHC  price "))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
+      }, this.props.items.map(function (value) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+          key: value.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pl-thumb"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "images/product/" + value.filename,
+          alt: ""
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, " ", value.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GHC  ", value.price, " "));
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "price-list"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "price")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Shipping", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "free")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, this.props.items.map(function (value) {
+        counter = counter + value.price;
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, counter)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Shipping", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "free")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "total"
-      }, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "price ")))));
+      }, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, counter, " ")))));
     }
   }]);
 
@@ -67363,13 +67439,32 @@ var HeroBanner =
 function (_React$Component) {
   _inherits(HeroBanner, _React$Component);
 
-  function HeroBanner() {
+  function HeroBanner(props) {
+    var _this;
+
     _classCallCheck(this, HeroBanner);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(HeroBanner).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(HeroBanner).call(this, props));
+    _this.state = {
+      data: []
+    };
+    return _this;
   }
 
   _createClass(HeroBanner, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      var _this2 = this;
+
+      axios.get('api/product/display/latest_product').then(function (response) {
+        _this2.setState({
+          data: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("section", {
@@ -67385,7 +67480,7 @@ function (_React$Component) {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-xl-6 col-lg-7 text-white"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Arrivals"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "name"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "description"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "New Arrivals"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", null, "readsname "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "readsdescription "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: "#",
         className: "site-btn sb-line"
       }, "DISCOVER"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
@@ -67393,7 +67488,7 @@ function (_React$Component) {
         className: "site-btn sb-white"
       }, "ADD TO CART"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "offer-card text-white"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "from"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "GHC price"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "SHOP NOW"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "from"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", null, "GHC readsprice "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "SHOP NOW"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "container"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "slide-num-holder",
@@ -67748,157 +67843,159 @@ function (_React$Component) {
   _createClass(RightProduct, [{
     key: "render",
     value: function render() {
-      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-6 product-details"
       }, this.props.items.map(function (value) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           key: value.id
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "values"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h2", {
           className: "p-title"
         }, " ", value.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
           className: "p-price"
-        }, " ", value.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        }, "GHC ", value.price, " "), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
           className: "p-stock"
-        }, " Available: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "In Stock")));
+        }, " Available: ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "In Stock"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "p-rating"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-star-o"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-star-o"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-star-o"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-star-o"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "fa fa-star-o fa-fade"
+        })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "p-review"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: ""
+        }, "3 reviews"), "|", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: ""
+        }, "Add your review")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "fw-size-choose"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "xs-size"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "xs-size"
+        }, "32")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "s-size"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "s-size"
+        }, "34")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "m-size"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "m-size"
+        }, "36")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "l-size"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "l-size"
+        }, "38")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item disable"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "xl-size",
+          disabled: true
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "xl-size"
+        }, "40")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "sc-item"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "radio",
+          name: "sc",
+          id: "xxl-size"
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+          htmlFor: "xxl-size"
+        }, "42"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "quantity"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "pro-qty"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          type: "text"
+        }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
+          href: "/cart",
+          className: "site-btn"
+        }, "SHOP NOW"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "accordion",
+          className: "accordion-area"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-header",
+          id: "headingOne"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "panel-link active",
+          "data-toggle": "collapse",
+          "data-target": "#collapse1",
+          "aria-expanded": "true",
+          "aria-controls": "collapse1"
+        }, "information")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "collapse1",
+          className: "collapse show",
+          "aria-labelledby": "headingOne",
+          "data-parent": "#accordion"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-body"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, value.description)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-header",
+          id: "headingTwo"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "panel-link",
+          "data-toggle": "collapse",
+          "data-target": "#collapse2",
+          "aria-expanded": "false",
+          "aria-controls": "collapse2"
+        }, "card details ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "collapse2",
+          className: "collapse",
+          "aria-labelledby": "headingTwo",
+          "data-parent": "#accordion"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-body"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          src: "",
+          alt: ""
+        }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-header",
+          id: "headingThree"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "panel-link",
+          "data-toggle": "collapse",
+          "data-target": "#collapse3",
+          "aria-expanded": "false",
+          "aria-controls": "collapse3"
+        }, "shipping & Returns")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          id: "collapse3",
+          className: "collapse",
+          "aria-labelledby": "headingThree",
+          "data-parent": "#accordion"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+          className: "panel-body"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "7 Days Returns"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Cash on Delivery Available", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Home Delivery ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "3 - 4 days")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec."))))));
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "p-rating"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-star-o"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-star-o"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-star-o"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-star-o"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "fa fa-star-o fa-fade"
-      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "p-review"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
-      }, "3 reviews"), "|", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: ""
-      }, "Add your review")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "fw-size-choose"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "xs-size"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "xs-size"
-      }, "32")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "s-size"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "s-size"
-      }, "34")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "m-size"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "m-size"
-      }, "36")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "l-size"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "l-size"
-      }, "38")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item disable"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "xl-size",
-        disabled: true
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "xl-size"
-      }, "40")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "sc-item"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "radio",
-        name: "sc",
-        id: "xxl-size"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
-        htmlFor: "xxl-size"
-      }, "42"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "quantity"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "pro-qty"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
-        type: "text"
-      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
-        href: "/cart",
-        className: "site-btn"
-      }, "SHOP NOW"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "accordion",
-        className: "accordion-area"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-header",
-        id: "headingOne"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "panel-link active",
-        "data-toggle": "collapse",
-        "data-target": "#collapse1",
-        "aria-expanded": "true",
-        "aria-controls": "collapse1"
-      }, "information")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "collapse1",
-        className: "collapse show",
-        "aria-labelledby": "headingOne",
-        "data-parent": "#accordion"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "description")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-header",
-        id: "headingTwo"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "panel-link",
-        "data-toggle": "collapse",
-        "data-target": "#collapse2",
-        "aria-expanded": "false",
-        "aria-controls": "collapse2"
-      }, "care details ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "collapse2",
-        className: "collapse",
-        "aria-labelledby": "headingTwo",
-        "data-parent": "#accordion"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        src: "",
-        alt: ""
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec.")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-header",
-        id: "headingThree"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "panel-link",
-        "data-toggle": "collapse",
-        "data-target": "#collapse3",
-        "aria-expanded": "false",
-        "aria-controls": "collapse3"
-      }, "shipping & Returns")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        id: "collapse3",
-        className: "collapse",
-        "aria-labelledby": "headingThree",
-        "data-parent": "#accordion"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "panel-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "7 Days Returns"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Cash on Delivery Available", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), "Home Delivery ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "3 - 4 days")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pharetra tempor so dales. Phasellus sagittis auctor gravida. Integer bibendum sodales arcu id te mpus. Ut consectetur lacus leo, non scelerisque nulla euismod nec."))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "social-sharing"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
         href: ""
@@ -67920,7 +68017,7 @@ function (_React$Component) {
         href: ""
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
         className: "fa fa-youtube"
-      })))));
+      }))));
     }
   }]);
 

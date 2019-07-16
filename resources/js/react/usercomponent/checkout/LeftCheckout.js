@@ -2,6 +2,19 @@ import React from 'react'
 
 
 class LeftCheckout extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {}
+    this.onValueChange = this.onValueChange.bind(this);
+  }
+
+onValueChange(e){
+  this.setState({
+  [e.target.name]  : e.target.value
+  });
+}
+
   render() {
     return (
 
@@ -28,15 +41,15 @@ class LeftCheckout extends React.Component {
       						</div>
       						<div className="row address-inputs">
       							<div className="col-md-12">
-      								<input type="text"  name="address" placeholder="Address"/>
-      								<input type="text"  name="region"  placeholder="Region"/>
-      								<input type="text"  name="country" placeholder="Country"/>
+      								<input type="text"  name="address" placeholder="Address" onChange={this.onValueChange}/>
+      								<input type="text"  name="region"  placeholder="Region" onChange={this.onValueChange}/>
+      								<input type="text"  name="country" placeholder="Country" onChange={this.onValueChange}/>
       							</div>
       							<div className="col-md-6">
-      								<input type="text" name="number" placeholder="Phone Number"/>
+      								<input type="text" name="number" placeholder="Phone Number" onChange={this.onValueChange}/>
       							</div>
       							<div className="col-md-6">
-      								<input type="text" name="email" value="{{Auth::user()->email}}" disabled placeholder="Email Address"/>
+      								<input type="text" name="email"   placeholder="Email Address" onChange={this.onValueChange}/>
       							</div>
       						</div>
       						<div className="cf-title">Delievery Info</div>

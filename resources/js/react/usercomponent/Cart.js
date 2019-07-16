@@ -5,6 +5,26 @@ import LeftCart from './cart/LeftCart'
 import RightCart from './cart/RightCart'
 
 class Cart extends React.Component {
+
+  constructor(props){
+    super(props);
+    this.state = {
+      data : []
+    }
+  }
+
+componentWillMount() {
+  axios.get('/getcartItems')
+    .then(response => {
+      this.setState({
+        data : response.data
+      });
+    })
+    .catch( error => {
+      console.log(error);
+    });
+}
+
   render() {
     return (
       <div>
@@ -22,7 +42,7 @@ class Cart extends React.Component {
           <section className="cart-section spad">
             <div className="container">
               <div className="row">
-                <LeftCart/>
+                <LeftCart items = {this.state.data}/>
                 <RightCart/>
               </div>
             </div>

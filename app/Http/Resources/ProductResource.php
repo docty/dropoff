@@ -6,7 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
 {
- 
+
     public function toArray($request)
     {
         return [
@@ -15,6 +15,7 @@ class ProductResource extends JsonResource
             'price'       => $this->price,
             'filename'    => $this->filename,
             'type'        => $this->type,
+            'category'    => $this->category,
             'description' => $this->description,
         ];
     }

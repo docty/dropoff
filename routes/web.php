@@ -39,6 +39,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 
 Route::post('/addcart', 'CartController@addToCart')->name('addcart');
+Route::get('/getcartItems', 'CartController@getCart')->name('getCart');
 Route::post('/order', 'CartController@placeOrder')->name('order');
 Route::get('/billingInfo', 'CartController@getBillingInfo')->name('billingInfo');
 

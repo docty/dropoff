@@ -43,7 +43,7 @@
 <script src="{{ asset('js/angular.js') }}" defer></script>
 
 <!-- Personal Scripts -->
-@stack('extScript')
-<script src="{{ asset('js/cart.js') }}" defer type="text/javascript"></script>
+<!--@stack('extScript')-->
+<!--<script src="{{ asset('js/cart.js') }}" defer type="text/javascript"></script> -->
 
 </html>
