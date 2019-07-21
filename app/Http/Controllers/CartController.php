@@ -12,7 +12,7 @@ class CartController extends Controller
 
 		public function getCart()
 		{
-					return Cart::where('email', 'docty@test.com')->get();
+					return Cart::where('email', Auth::user()->email)->get();
 		}
 
      	public function addToCart(Request $request){
@@ -24,8 +24,8 @@ class CartController extends Controller
 		$cart->price = $request->price;
 		$cart->filename = $request->filename;
 		$cart->description = $request->description;
-		//$cart->email = Auth::user()->email;
-		$cart->email = $request->email;
+		$cart->email = Auth::user()->email;
+		//$cart->email = $request->email;
 
 		$cart->save();
 		return "Added successfully";
@@ -60,11 +60,17 @@ class CartController extends Controller
 	}
 
 
+	public function getAuthCheck()
+	{
+			if(Auth::check())
+					return "authenticated" ;
+					else
+					return 'unauthenticated';
+	}
+
 	public function getBillingInfo()
 	{
-
-
-
+		return Auth::user()->email;
 		return BillingAddress::where('email', Auth::user()->email )->get();
 	}
 }

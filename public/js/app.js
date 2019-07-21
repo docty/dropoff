@@ -60963,7 +60963,7 @@ if (false) {} else {
 /*!***************************************************************!*\
   !*** ./node_modules/react-router-dom/esm/react-router-dom.js ***!
   \***************************************************************/
-/*! exports provided: BrowserRouter, HashRouter, Link, NavLink, MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext */
+/*! exports provided: MemoryRouter, Prompt, Redirect, Route, Router, StaticRouter, Switch, generatePath, matchPath, withRouter, __RouterContext, BrowserRouter, HashRouter, Link, NavLink */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -65732,10 +65732,14 @@ function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      axios.get('/getcartItems').then(function (response) {
-        _this2.setState({
-          data: response.data
-        });
+      axios.get('/getauth').then(function (response) {
+        if (response.data == "authenticated") {
+          _this2.authenticated();
+        } else {
+          _this2.unauthenticated();
+        }
+
+        ;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -65762,6 +65766,36 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_LeftCart__WEBPACK_IMPORTED_MODULE_3__["default"], {
         items: this.state.data
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_cart_RightCart__WEBPACK_IMPORTED_MODULE_4__["default"], null)))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+    }
+  }, {
+    key: "authenticated",
+    value: function authenticated() {
+      var _this3 = this;
+
+      console.log('authenticated');
+      axios.get('/getcartItems').then(function (response) {
+        _this3.setState({
+          data: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "unauthenticated",
+    value: function unauthenticated() {
+      console.log('unauthenticated');
+      var obj = window.localStorage;
+      var array = new Array();
+
+      for (var _i = 0, _Object$keys = Object.keys(obj); _i < _Object$keys.length; _i++) {
+        var key = _Object$keys[_i];
+        array.push(JSON.parse(obj[key]));
+      }
+
+      this.setState({
+        data: array
+      });
     }
   }]);
 
@@ -65860,17 +65894,18 @@ function (_React$Component) {
   }, {
     key: "cartHandler",
     value: function cartHandler(item) {
-      axios.post('/addcart', {
-        name: item.name,
-        size: 'M',
-        quantity: '1',
-        price: item.price,
-        filename: item.filename,
-        description: item.description,
-        email: 'docty@test.com'
-      }).then(function (response) {
-        console.log(response.data);
-      })["catch"](function (error) {// Describe error!
+      var _this3 = this;
+
+      axios.get('/getauth').then(function (response) {
+        if (response.data == "authenticated") {
+          _this3.authenticated(item);
+        } else {
+          _this3.unauthenticated(item);
+        }
+
+        ;
+      })["catch"](function (error) {
+        console.log(error);
       });
     }
   }, {
@@ -65894,6 +65929,41 @@ function (_React$Component) {
         queryValue: this.state.info.data,
         cartHandler: this.cartHandler
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_4__["default"], null));
+    }
+  }, {
+    key: "authenticated",
+    value: function authenticated(item) {
+      console.log('authenticated');
+      axios.post('/addcart', {
+        name: item.name,
+        size: 'M',
+        quantity: '1',
+        price: item.price,
+        filename: item.filename,
+        description: item.description
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "unauthenticated",
+    value: function unauthenticated(item) {
+      console.log('unauthenticated');
+      var date = Date.parse(new Date());
+      window.localStorage.setItem(date, JSON.stringify(item));
+      var obj = window.localStorage;
+      var array = new Array();
+
+      for (var _i = 0, _Object$keys = Object.keys(obj); _i < _Object$keys.length; _i++) {
+        var key = _Object$keys[_i];
+        array.push(JSON.parse(obj[key]));
+      }
+
+      array.map(function (item) {
+        console.log(item);
+      });
     }
   }]);
 
@@ -65965,10 +66035,14 @@ function (_React$Component) {
     value: function componentWillMount() {
       var _this2 = this;
 
-      axios.get('/getcartItems').then(function (response) {
-        _this2.setState({
-          data: response.data
-        });
+      axios.get('/getauth').then(function (response) {
+        if (response.data == "authenticated") {
+          _this2.authenticated();
+        } else {
+          _this2.unauthenticated();
+        }
+
+        ;
       })["catch"](function (error) {
         console.log(error);
       });
@@ -65995,6 +66069,36 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_LeftCheckout__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_checkout_RightCheckout__WEBPACK_IMPORTED_MODULE_4__["default"], {
         items: this.state.data
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
+    }
+  }, {
+    key: "authenticated",
+    value: function authenticated() {
+      var _this3 = this;
+
+      console.log('authenticated');
+      axios.get('/getcartItems').then(function (response) {
+        _this3.setState({
+          data: response.data
+        });
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: "unauthenticated",
+    value: function unauthenticated() {
+      console.log('unauthenticated');
+      var obj = window.localStorage;
+      var array = new Array();
+
+      for (var _i = 0, _Object$keys = Object.keys(obj); _i < _Object$keys.length; _i++) {
+        var key = _Object$keys[_i];
+        array.push(JSON.parse(obj[key]));
+      }
+
+      this.setState({
+        data: array
+      });
     }
   }]);
 
@@ -67930,6 +68034,7 @@ function (_React$Component) {
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "Quantity"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "pro-qty"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+          defaultValue: "1",
           type: "text"
         }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("a", {
           href: "/cart",

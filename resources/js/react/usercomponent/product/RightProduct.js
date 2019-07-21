@@ -60,7 +60,7 @@ class RightProduct extends React.Component {
                   </div>
                   <div className="quantity">
                     <p>Quantity</p>
-                    <div className="pro-qty"><input type="text" /></div>
+                    <div className="pro-qty"><input defaultValue="1" type="text" /></div>
                   </div>
                   <a href="/cart" className="site-btn">SHOP NOW</a>
                   <div id="accordion" className="accordion-area">

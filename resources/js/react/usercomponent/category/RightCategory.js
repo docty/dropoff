@@ -11,11 +11,11 @@ class RightCategory extends React.Component {
 constructor(props){
     super(props);
     this.cartHandler = this.cartHandler.bind(this);
+
 }
 
 
 cartHandler(item){
-
     this.props.cartHandler(item);
 }
 

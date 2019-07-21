@@ -14,15 +14,18 @@ class Checkout extends React.Component {
   }
 
 componentWillMount() {
-  axios.get('/getcartItems')
+  axios.get('/getauth')
     .then(response => {
-      this.setState({
-        data : response.data
-      });
+      if (response.data == "authenticated") {
+          this.authenticated();
+      }else{
+          this.unauthenticated();
+      };
     })
-    .catch( error => {
+    .catch(function (error){
       console.log(error);
     });
+
 }
 
 
@@ -60,6 +63,34 @@ componentWillMount() {
       </div>
     );
   }
+
+  authenticated (){
+    console.log('authenticated');
+    axios.get('/getcartItems')
+      .then(response => {
+        this.setState({
+          data : response.data
+        });
+      })
+      .catch( error => {
+        console.log(error);
+      });
+
+  }
+
+  unauthenticated (){
+    console.log('unauthenticated');
+    let obj =  window.localStorage;
+    var array = new Array();
+    for (const key of Object.keys(obj))
+        array.push(JSON.parse(obj[key]));
+
+    this.setState({
+      data : array
+    });
+  }
+
+
 }
 
 export default Checkout;

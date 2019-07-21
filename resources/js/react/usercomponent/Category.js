@@ -48,21 +48,20 @@ class Category extends React.Component {
 
 cartHandler(item){
 
-  axios.post('/addcart',{
-    name: item.name,
-    size : 'M',
-    quantity : '1',
-    price: item.price,
-    filename: item.filename,
-    description: item.description,
-    email : 'docty@test.com'
-   })
-    .then(function (response){
-     console.log(response.data);
+  axios.get('/getauth')
+    .then(response => {
+      if (response.data == "authenticated") {
+          this.authenticated(item);
+      }else{
+          this.unauthenticated(item);
+      };
     })
-    .catch( function (error){
-      // Describe error!
+    .catch(function (error){
+      console.log(error);
     });
+
+
+
 }
 
   render() {
@@ -91,6 +90,43 @@ cartHandler(item){
           <Footer/>
       </div>
     );
+  }
+
+
+  authenticated (item){
+    console.log('authenticated');
+     axios.post('/addcart',{
+        name: item.name,
+        size : 'M',
+        quantity : '1',
+        price: item.price,
+        filename: item.filename,
+        description: item.description,
+
+       })
+        .then(function (response){
+         console.log(response.data);
+        })
+        .catch( function (error){
+          console.log(error);
+        });
+
+  }
+
+  unauthenticated (item){
+    console.log('unauthenticated');
+      var date = Date.parse(new Date());
+      window.localStorage.setItem(date, JSON.stringify(item));
+      let obj =  window.localStorage;
+
+        var array = new Array();
+        for (const key of Object.keys(obj)) {
+            array.push(JSON.parse(obj[key]));
+
+    }
+    array.map(item => {
+        console.log(item);
+    });
   }
 }
 
