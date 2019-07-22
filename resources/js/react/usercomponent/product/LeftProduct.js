@@ -6,7 +6,9 @@ class LeftProduct extends React.Component {
     return (
       <div className="col-lg-6">
       	<div className="product-pic-zoom">
-      		<img className="product-big-img" src="../images/product/1.jpg" alt="" style={{width:'80%', height: '500px'}}/>
+          {this.props.items.map(value => {
+      		return(<img className="product-big-img" src={"../images/product/"+value.filename} alt="" style={{width:'80%', height: '500px'}} key={value.id}/>)
+            })}
       	</div>
       	<div className="product-thumbs"  style={{overflow: 'hidden', outline: 'none'}}>
       		<div className="product-thumbs-track">

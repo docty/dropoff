@@ -65953,17 +65953,6 @@ function (_React$Component) {
       console.log('unauthenticated');
       var date = Date.parse(new Date());
       window.localStorage.setItem(date, JSON.stringify(item));
-      var obj = window.localStorage;
-      var array = new Array();
-
-      for (var _i = 0, _Object$keys = Object.keys(obj); _i < _Object$keys.length; _i++) {
-        var key = _Object$keys[_i];
-        array.push(JSON.parse(obj[key]));
-      }
-
-      array.map(function (item) {
-        console.log(item);
-      });
     }
   }]);
 
@@ -66278,7 +66267,9 @@ function (_React$Component) {
         href: "/category"
       }, " << Back to Category")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_LeftProduct__WEBPACK_IMPORTED_MODULE_3__["default"], null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_RightProduct__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_LeftProduct__WEBPACK_IMPORTED_MODULE_3__["default"], {
+        items: this.state.data
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_product_RightProduct__WEBPACK_IMPORTED_MODULE_4__["default"], {
         items: this.state.data
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_home_Footer__WEBPACK_IMPORTED_MODULE_2__["default"], null));
     }
@@ -66304,6 +66295,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -66312,9 +66305,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -66327,16 +66320,42 @@ var LeftCart =
 function (_React$Component) {
   _inherits(LeftCart, _React$Component);
 
-  function LeftCart() {
+  function LeftCart(props) {
+    var _this;
+
     _classCallCheck(this, LeftCart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LeftCart).apply(this, arguments));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LeftCart).call(this, props));
+    _this.counter = 0;
+    _this.state = {
+      quantity: 1
+    };
+    _this.onValueChange = _this.onValueChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(LeftCart, [{
+    key: "onValueChange",
+    value: function onValueChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(nextProps, nextState) {
+      var _this2 = this;
+
+      var counter = 0;
+      this.props.items.map(function (value, index) {
+        counter = counter + (_this2.state[index] == null ? parseFloat(value.price) : parseFloat(_this2.state[index]) * parseFloat(value.price));
+      });
+      console.log(counter);
+      $('#totalValue').text('GHC ' + counter);
+    }
+  }, {
     key: "render",
     value: function render() {
-      var counter = 0;
+      var _this3 = this;
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-8"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -66351,9 +66370,9 @@ function (_React$Component) {
         className: "size-th"
       }, "Size"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         className: "total-th"
-      }, "Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.props.items.map(function (value) {
+      }, "Price"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null, this.props.items.map(function (value, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", {
-          key: value.id
+          key: index
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "product-col"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
@@ -66369,17 +66388,21 @@ function (_React$Component) {
           className: "pro-qty"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
-          defaultValue: "1"
+          defaultValue: "1",
+          id: "quantity",
+          name: index,
+          onChange: _this3.onValueChange
         })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "size-col"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Size ", value.size)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
-          className: "total-col"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "GHC ", value.price * value.quantity)));
+          className: "total-col",
+          id: index
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "GHC ", parseFloat(value.price) * (_this3.state[index] == null ? 1 : _this3.state[index]))));
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "total-cost"
-      }, this.props.items.map(function (value) {
-        counter = counter + value.price;
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Total ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "GHC ", counter)))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Total ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "totalValue"
+      })))));
     }
   }]);
 
@@ -67851,14 +67874,17 @@ function (_React$Component) {
         className: "col-lg-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "product-pic-zoom"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
-        className: "product-big-img",
-        src: "../images/product/1.jpg",
-        alt: "",
-        style: {
-          width: '80%',
-          height: '500px'
-        }
+      }, this.props.items.map(function (value) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("img", {
+          className: "product-big-img",
+          src: "../images/product/" + value.filename,
+          alt: "",
+          style: {
+            width: '80%',
+            height: '500px'
+          },
+          key: value.id
+        });
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "product-thumbs",
         style: {

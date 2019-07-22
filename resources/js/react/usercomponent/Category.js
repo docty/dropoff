@@ -117,16 +117,6 @@ cartHandler(item){
     console.log('unauthenticated');
       var date = Date.parse(new Date());
       window.localStorage.setItem(date, JSON.stringify(item));
-      let obj =  window.localStorage;
-
-        var array = new Array();
-        for (const key of Object.keys(obj)) {
-            array.push(JSON.parse(obj[key]));
-
-    }
-    array.map(item => {
-        console.log(item);
-    });
   }
 }
 

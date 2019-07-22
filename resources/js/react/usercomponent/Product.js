@@ -63,7 +63,7 @@ class Product extends React.Component {
           				<a href="/category"> &lt;&lt; Back to Category</a>
           			</div>
           			<div className="row">
-                         <Leftroduct/>
+                         <Leftroduct items= {this.state.data}/>
                         <RightProduct items= {this.state.data}/>
           			</div>
           		</div>

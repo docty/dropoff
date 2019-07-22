@@ -75,16 +75,20 @@ componentWillMount() {
   unauthenticated (){
     console.log('unauthenticated');
     let obj =  window.localStorage;
+
     var array = new Array();
-    for (const key of Object.keys(obj))
+
+    for (const key of Object.keys(obj)){
         array.push(JSON.parse(obj[key]));
+      }
 
     this.setState({
       data : array
     });
+
   }
 
-  
+
 }
 
 export default Cart;
