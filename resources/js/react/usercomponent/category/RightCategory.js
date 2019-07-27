@@ -11,12 +11,19 @@ class RightCategory extends React.Component {
 constructor(props){
     super(props);
     this.cartHandler = this.cartHandler.bind(this);
+    this.itemClick = this.itemClick.bind(this);
 
 }
 
 
 cartHandler(item){
     this.props.cartHandler(item);
+}
+
+itemClick(item){
+
+    this.props.itemClick(item);
+    //<a href={"/category/"+item.category+"?id="+item.id}><img onClick={() => this.itemClick()} src={'./images/product/'+item.filename} alt="Product"/></a>
 }
 
   render() {
@@ -29,7 +36,7 @@ cartHandler(item){
                 return (<div className="col-lg-4 col-md-6" key={item.id}>
                   <div className="product-item">
                       <div className="pi-pic">
-                          <a href={"/category/"+item.category+"?id="+item.id}><img src={'./images/product/'+item.filename} alt="Product"/></a>
+                          <a href={"/category/"+item.category+"?id="+item.id}><img onClick={() => this.itemClick()} src={'./images/product/'+item.filename} alt="Product"/></a>
                           <div className="pi-links">
                               <a className="add-card"><i className="flaticon-bag"></i>
                                     <button  onClick={() => this.cartHandler(item)} style={{width: '100%'}}><span>ADD TO CART</span></button>

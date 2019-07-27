@@ -5,34 +5,25 @@ class LeftCart extends React.Component {
 
   constructor(props){
     super(props);
-    this.counter = 0;
-    this.state = {
-        quantity : 1
-    }
 
-    this.onValueChange = this.onValueChange.bind(this);
+
   }
 
-  onValueChange(e){
 
-    this.setState({
-      [e.target.name] : e.target.value,
 
-    });
-
-}
 
 
   componentDidUpdate(nextProps, nextState) {
     let counter = 0;
-    this.props.items.map((value, index) => {
-      counter = counter + (this.state[index] == null ? parseFloat(value.price) : parseFloat(this.state[index])*parseFloat(value.price));
-    })
+    // this.props.items.map((value, index) => {
+    //   counter = counter + (this.props.valueChange[index] == null ? parseFloat(value.price) : parseFloat(this.props.valueChange[index])*parseFloat(value.price));
+    // })
     console.log(counter);
     $('#totalValue').text('GHC ' + counter);
   }
+
   render() {
-    
+
     return (
 
 
@@ -63,13 +54,13 @@ class LeftCart extends React.Component {
                       </td>
                       <td className="quy-col">
                         <div className="quantity">
-                            <div className="pro-qty">
-                            <input type="text" defaultValue="1" id="quantity" name={index} onChange={this.onValueChange}/>
+                            <div className="pro-qty">,
+                            <input type="text" defaultValue="1"  name={index} onChange={this.props.onValueChange}/>
                           </div>
                         </div>
                       </td>
                       <td className="size-col"><h4>Size {value.size}</h4></td>
-                      <td className="total-col" id={index}><h4>GHC { parseFloat(value.price) * (this.state[index] == null ? 1 : this.state[index]) }</h4></td>
+
                 </tr>
               )
               })}

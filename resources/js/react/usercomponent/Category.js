@@ -1,29 +1,29 @@
 import React from 'react'
+import {connect} from 'react-redux';
 
 import Header from './home/Header'
 import LeftCategory from './category/LeftCategory'
 import RightCategory from './category/RightCategory'
 import Footer from './home/Footer'
+import {setCategoryValue} from './../redux/action/index'
+
 
 class Category extends React.Component {
 
   constructor(props){
     super(props);
-    this.state = {
-      info : { data : []},
-    }
 
     this.itemClickHandler = this.itemClickHandler.bind(this);
-    this.fetchData = this.fetchData.bind(this);
     this.cartHandler = this.cartHandler.bind(this);
+
   }
+
 
 
   componentWillMount() {
+      this.fetchData('footwear', 'none');
+}
 
-      this.fetchData('footwear', 'none')
-
-  }
 
 
   itemClickHandler(category, type) {
@@ -33,13 +33,11 @@ class Category extends React.Component {
 
 
   fetchData(category, type){
+
       let query = 'api/product/'+category+'?type='+type
       axios.get(query)
             .then(response => {
-              this.setState({
-                  info : response.data
-              });
-
+              this.props.product(response.data);
             })
             .catch(error => {
               console.log(error);
@@ -59,10 +57,9 @@ cartHandler(item){
     .catch(function (error){
       console.log(error);
     });
-
-
-
 }
+
+
 
   render() {
     return (
@@ -79,10 +76,11 @@ cartHandler(item){
         	</div>
 
           <section className="category-section spad">
+
             <div className="container">
               <div className="row">
               <LeftCategory itemClickHandler={this.itemClickHandler}/>
-              <RightCategory queryValue={this.state.info.data} cartHandler={this.cartHandler}/>
+              <RightCategory queryValue={this.props.items} cartHandler={this.cartHandler} itemClick={this.props.itemClick}/>
 
               </div>
             </div>
@@ -120,4 +118,18 @@ cartHandler(item){
   }
 }
 
-export default Category;
+export const mapDispatchToProps = (dispatch) => {
+  return {
+      product: (element) => {
+          dispatch(setCategoryValue(element));
+      }
+    }
+};
+
+export const mapStateToProps = (state) => {
+  return {
+        items : state.category.data
+      }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

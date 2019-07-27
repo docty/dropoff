@@ -1,29 +1,21 @@
 import React from 'react'
+import {connect} from 'react-redux';
+
 import Header from './home/Header'
 import Footer from './home/Footer'
 import Leftroduct from './product/LeftProduct'
 import RightProduct from './product/RightProduct'
-
+import {setProductValue} from './../redux/action/index'
 
 
 
 
 class Product extends React.Component {
 
-    constructor(props){
-        super(props);
-        this.state = {
-            data :   []
-
-        }
-
-        this.fetchData = this.fetchData.bind(this);
-    }
 
     componentDidMount() {
 
         const query = new URLSearchParams(this.props.location.search)
-
         this.fetchData(query.get('id'), this.props.match.params.type);
     }
 
@@ -31,11 +23,8 @@ class Product extends React.Component {
 
         axios.get('/api/product/'+type+'/'+id)
           .then(response => {
-            console.log(response.data.data);
-             this.setState({
-                 data : response.data.data
-             });
-          })
+             this.props.product(response.data.data)
+        })
           .catch(error =>{
             console.log(error);
           });
@@ -63,8 +52,8 @@ class Product extends React.Component {
           				<a href="/category"> &lt;&lt; Back to Category</a>
           			</div>
           			<div className="row">
-                         <Leftroduct items= {this.state.data}/>
-                        <RightProduct items= {this.state.data}/>
+                         <Leftroduct items= {this.props.productClick}/>
+                        <RightProduct items= {this.props.productClick}/>
           			</div>
           		</div>
           	</section>
@@ -74,4 +63,19 @@ class Product extends React.Component {
   }
 }
 
-export default Product;
+export const mapDispatchToProps = (dispatch) => {
+  return {
+      product: (element) => {
+          dispatch(setProductValue(element));
+      }
+    }
+};
+
+export const mapStateToProps = (state) => {
+  return {
+        productClick : state.product.clickedValues
+      }
+};
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(Product);
