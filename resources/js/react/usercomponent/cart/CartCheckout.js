@@ -5,21 +5,27 @@ import LeftCart from './LeftCart'
 import LeftCheckout from './LeftCheckout'
 import RightCheckout from './RightCheckout'
 
-import {setCartValue, setCartCheckoutDisplay, setValueChange} from './../../redux/action/index'
+import {setCartValue, setCartCheckoutDisplay, setValueChange, setDeliveryMode} from './../../redux/action/index'
 
 class CartCheckout extends React.Component {
 
 constructor(props){
   super(props);
 
-
+  this.state = {}
+  this.onValueChange = this.onValueChange.bind(this);
 }
 
+
 onValueChange(e){
-  console.log(e.target.value);
-  // this.setState({
-  // [e.target.name]  : e.target.value
-  // });
+  if(e.target.value < 1){
+    e.target.value = 1;
+  }
+  this.setState({
+    [e.target.name]: e.target.value
+  });
+
+
 }
 
   componentWillMount() {
@@ -38,21 +44,29 @@ onValueChange(e){
 
   }
 
+  componentDidUpdate(nextProps, nextState) {
+    let counter = 0;
+       this.props.cartValue.map((value, index) => {
+      counter = counter + (this.state[index] == null ? parseFloat(value.price) : parseFloat(this.state[index])*parseFloat(value.price));
+      })
 
+    $('#totalValue').text('GHC ' + counter);
+
+  }
 
   render() {
     if(this.props.cartCheckout){
       return (
         <div className="row">
-          <LeftCart items={this.props.cartValue} onValueChange = {this.props.onValueChange} />
+          <LeftCart items={this.props.cartValue} onValueChange = {this.onValueChange} newChanges={this.state}  />
           <RightCart proceed={this.props.proceed}/>
-          </div>
+        </div>
        );
      }else{
       return (
         <div className="row">
-          <LeftCheckout  proceed={this.props.proceed}/>
-          <RightCheckout items = {this.props.cartValue} />
+          <LeftCheckout onDelivery={this.props.onDelivery} proceed={this.props.proceed}/>
+          <RightCheckout deliveryMode ={this.props.delivery} items = {this.props.cartValue} />
          </div>
        )
      }
@@ -81,7 +95,8 @@ unauthenticated (){
       array.push(JSON.parse(obj[key]));
     }
 
-  this.props.cart(array)
+  this.props.cart(array);
+  console.log(array);
   }
 
 }
@@ -96,7 +111,12 @@ export const mapDispatchToProps = (dispatch) => {
         dispatch(setCartCheckoutDisplay())
       },
       onValueChange : (e) => {
+
           dispatch(setValueChange(e))
+      },
+      onDelivery : (e) => {
+
+         dispatch(setDeliveryMode(e))
       }
     }
 };
@@ -105,7 +125,8 @@ export const mapStateToProps = (state) => {
   return {
         cartValue : state.cart.items,
         cartCheckout : state.cart.isCartShowing,
-        valueChange : state.cart.valueChange
+        valueChange : state.cart.valueChange,
+        delivery : state.cart.delivery
       }
 };
 

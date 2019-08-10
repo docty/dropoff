@@ -1,7 +1,26 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 
 class RightCheckout extends React.Component {
+
+
+  componentWillMount(){
+    this.checkingMode();
+  }
+  componentDidUpdate(){
+    this.checkingMode();
+  }
+  checkingMode(){
+    if(this.props.deliveryMode == 'Free'){
+      var totalValue = $('#totalValue').text();
+      $('#overallTotal').text(totalValue);
+    }else{
+      var totalValue = $('#totalValue').text().split(' ')[1];
+      var diff = totalValue - parseFloat(this.props.deliveryMode);
+      $('#overallTotal').text('GHC ' + diff);
+    }
+  }
+
   render() {
     let counter = 0;
     return (
@@ -21,12 +40,10 @@ class RightCheckout extends React.Component {
 
           </ul>
           <ul className="price-list">
-            {this.props.items.map(value => {
-                counter = counter + value.price
-            })}
-            <li>Total<span>{counter}</span></li>
-            <li>Shipping<span>free</span></li>
-            <li className="total">Total<span>{counter} </span></li>
+
+            <li>Total<span id="totalValue"> </span></li>
+            <li>Shipping <span>{this.props.deliveryMode}</span></li>
+            <li className="total">Total<span id="overallTotal">  </span></li>
           </ul>
         </div>
       </div>

@@ -68077,7 +68077,7 @@ react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(routing, document.getEle
 /*!**************************************************!*\
   !*** ./resources/js/react/redux/action/index.js ***!
   \**************************************************/
-/*! exports provided: setCategoryValue, setProductValue, setCartValue, setCartCheckoutDisplay, setValueChange */
+/*! exports provided: setCategoryValue, setProductValue, setCartValue, setCartCheckoutDisplay, setValueChange, setDeliveryMode */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68087,6 +68087,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCartValue", function() { return setCartValue; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setCartCheckoutDisplay", function() { return setCartCheckoutDisplay; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setValueChange", function() { return setValueChange; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "setDeliveryMode", function() { return setDeliveryMode; });
 /* harmony import */ var _constants__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./../constants */ "./resources/js/react/redux/constants.js");
 
 function setCategoryValue(value) {
@@ -68118,6 +68119,12 @@ function setValueChange(value) {
     payload: value
   };
 }
+function setDeliveryMode(value) {
+  return {
+    type: _constants__WEBPACK_IMPORTED_MODULE_0__["DELIVERY_MODE"],
+    payload: value
+  };
+}
 
 /***/ }),
 
@@ -68125,7 +68132,7 @@ function setValueChange(value) {
 /*!***********************************************!*\
   !*** ./resources/js/react/redux/constants.js ***!
   \***********************************************/
-/*! exports provided: PRODUCT_CLICK, CATEGORY, CART, CART_CHECKOUT, CART_VALUE_CHANGE */
+/*! exports provided: PRODUCT_CLICK, CATEGORY, CART, CART_CHECKOUT, CART_VALUE_CHANGE, DELIVERY_MODE */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -68135,11 +68142,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CART", function() { return CART; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CART_CHECKOUT", function() { return CART_CHECKOUT; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CART_VALUE_CHANGE", function() { return CART_VALUE_CHANGE; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DELIVERY_MODE", function() { return DELIVERY_MODE; });
 var PRODUCT_CLICK = 'ProductClick';
 var CATEGORY = 'Category';
 var CART = 'Cart';
 var CART_CHECKOUT = 'CartCheckout';
 var CART_VALUE_CHANGE = 'CartValueChange';
+var DELIVERY_MODE = 'DeliveryMode';
 
 /***/ }),
 
@@ -68163,7 +68172,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 var initialState = {
   items: [],
   isCartShowing: true,
-  valueChange: {}
+  valueChange: [],
+  delivery: ''
 };
 
 function cartReducer() {
@@ -68182,9 +68192,14 @@ function cartReducer() {
       });
 
     case _constants__WEBPACK_IMPORTED_MODULE_0__["CART_VALUE_CHANGE"]:
-      return {
-        valueChange: _defineProperty({}, action.payload.target.name, action.payload.target.value)
-      };
+      return _objectSpread({}, state, {
+        valueChange: [_defineProperty({}, action.payload.target.name, [action.payload.target.value])]
+      });
+
+    case _constants__WEBPACK_IMPORTED_MODULE_0__["DELIVERY_MODE"]:
+      return _objectSpread({}, state, {
+        delivery: action.payload.target.value
+      });
 
     default:
       return state;
@@ -68912,6 +68927,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _redux_action_index__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./../../redux/action/index */ "./resources/js/react/redux/action/index.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -68920,9 +68937,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -68942,34 +68959,52 @@ function (_React$Component) {
   _inherits(CartCheckout, _React$Component);
 
   function CartCheckout(props) {
+    var _this;
+
     _classCallCheck(this, CartCheckout);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(CartCheckout).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(CartCheckout).call(this, props));
+    _this.state = {};
+    _this.onValueChange = _this.onValueChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(CartCheckout, [{
     key: "onValueChange",
     value: function onValueChange(e) {
-      console.log(e.target.value); // this.setState({
-      // [e.target.name]  : e.target.value
-      // });
+      if (e.target.value < 1) {
+        e.target.value = 1;
+      }
+
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
     }
   }, {
     key: "componentWillMount",
     value: function componentWillMount() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get('/getauth').then(function (response) {
         if (response.data == "authenticated") {
-          _this.authenticated();
+          _this2.authenticated();
         } else {
-          _this.unauthenticated();
+          _this2.unauthenticated();
         }
 
         ;
       })["catch"](function (error) {
         console.log(error);
       });
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate(nextProps, nextState) {
+      var _this3 = this;
+
+      var counter = 0;
+      this.props.cartValue.map(function (value, index) {
+        counter = counter + (_this3.state[index] == null ? parseFloat(value.price) : parseFloat(_this3.state[index]) * parseFloat(value.price));
+      });
+      $('#totalValue').text('GHC ' + counter);
     }
   }, {
     key: "render",
@@ -68979,7 +69014,8 @@ function (_React$Component) {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LeftCart__WEBPACK_IMPORTED_MODULE_3__["default"], {
           items: this.props.cartValue,
-          onValueChange: this.props.onValueChange
+          onValueChange: this.onValueChange,
+          newChanges: this.state
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RightCart__WEBPACK_IMPORTED_MODULE_2__["default"], {
           proceed: this.props.proceed
         }));
@@ -68987,8 +69023,10 @@ function (_React$Component) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
           className: "row"
         }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_LeftCheckout__WEBPACK_IMPORTED_MODULE_4__["default"], {
+          onDelivery: this.props.onDelivery,
           proceed: this.props.proceed
         }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_RightCheckout__WEBPACK_IMPORTED_MODULE_5__["default"], {
+          deliveryMode: this.props.delivery,
           items: this.props.cartValue
         }));
       }
@@ -68996,11 +69034,11 @@ function (_React$Component) {
   }, {
     key: "authenticated",
     value: function authenticated() {
-      var _this2 = this;
+      var _this4 = this;
 
       console.log('authenticated');
       axios.get('/getcartItems').then(function (response) {
-        _this2.props.cart(response.data);
+        _this4.props.cart(response.data);
       })["catch"](function (error) {
         console.log(error);
       });
@@ -69018,6 +69056,7 @@ function (_React$Component) {
       }
 
       this.props.cart(array);
+      console.log(array);
     }
   }]);
 
@@ -69035,6 +69074,9 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     },
     onValueChange: function onValueChange(e) {
       dispatch(Object(_redux_action_index__WEBPACK_IMPORTED_MODULE_6__["setValueChange"])(e));
+    },
+    onDelivery: function onDelivery(e) {
+      dispatch(Object(_redux_action_index__WEBPACK_IMPORTED_MODULE_6__["setDeliveryMode"])(e));
     }
   };
 };
@@ -69042,7 +69084,8 @@ var mapStateToProps = function mapStateToProps(state) {
   return {
     cartValue: state.cart.items,
     cartCheckout: state.cart.isCartShowing,
-    valueChange: state.cart.valueChange
+    valueChange: state.cart.valueChange,
+    delivery: state.cart.delivery
   };
 };
 /* harmony default export */ __webpack_exports__["default"] = (Object(react_redux__WEBPACK_IMPORTED_MODULE_1__["connect"])(mapStateToProps, mapDispatchToProps)(CartCheckout));
@@ -69070,9 +69113,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -69086,25 +69129,24 @@ function (_React$Component) {
   _inherits(LeftCart, _React$Component);
 
   function LeftCart(props) {
+    var _this;
+
     _classCallCheck(this, LeftCart);
 
-    return _possibleConstructorReturn(this, _getPrototypeOf(LeftCart).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(LeftCart).call(this, props));
+    _this.onValueChange = _this.onValueChange.bind(_assertThisInitialized(_this));
+    return _this;
   }
 
   _createClass(LeftCart, [{
-    key: "componentDidUpdate",
-    value: function componentDidUpdate(nextProps, nextState) {
-      var counter = 0; // this.props.items.map((value, index) => {
-      //   counter = counter + (this.props.valueChange[index] == null ? parseFloat(value.price) : parseFloat(this.props.valueChange[index])*parseFloat(value.price));
-      // })
-
-      console.log(counter);
-      $('#totalValue').text('GHC ' + counter);
+    key: "onValueChange",
+    value: function onValueChange(e) {
+      this.props.onValueChange(e);
     }
   }, {
     key: "render",
     value: function render() {
-      var _this = this;
+      var _this2 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-lg-8"
@@ -69138,12 +69180,14 @@ function (_React$Component) {
           className: "pro-qty"
         }, ",", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
           type: "text",
-          defaultValue: "1",
+          value: _this2.props.newChanges[index] == null ? 1 : _this2.props.newChanges[index],
           name: index,
-          onChange: _this.props.onValueChange
+          onChange: _this2.onValueChange
         })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
           className: "size-col"
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Size ", value.size)));
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, "Size M")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("td", {
+          className: "size-col"
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", null, value.price * (_this2.props.newChanges[index] == null ? 1 : _this2.props.newChanges[index]), " ")));
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "total-cost"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, "Total ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
@@ -69172,6 +69216,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
@@ -69180,9 +69226,9 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 
 function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
 
-function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
-
 function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
@@ -69202,14 +69248,46 @@ function (_React$Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(LeftCheckout).call(this, props));
     _this.state = {};
+    _this.onValueChange = _this.onValueChange.bind(_assertThisInitialized(_this));
+    _this.onDelivery = _this.onDelivery.bind(_assertThisInitialized(_this));
+    _this.submitData = _this.submitData.bind(_assertThisInitialized(_this));
     return _this;
   }
 
   _createClass(LeftCheckout, [{
+    key: "onValueChange",
+    value: function onValueChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "submitData",
+    value: function submitData(e) {
+      var shippingMode = $("input[name='shipping']:checked").val();
+      var paymentMode = $("input[name='payment']:checked").val();
+      e.preventDefault();
+      axios.post('/order', {
+        email: this.state['email'],
+        address: this.state['address'],
+        region: this.state['region'],
+        country: this.state['country'],
+        number: this.state['number'],
+        shipping: shippingMode,
+        payment: paymentMode
+      }).then(function (response) {
+        console.log(response.data);
+      })["catch"](function (error) {// Describe error!
+      });
+    }
+  }, {
+    key: "onDelivery",
+    value: function onDelivery(e) {
+      this.props.onDelivery(e);
+    }
+  }, {
     key: "render",
     value: function render() {
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
-        className: "col-lg-8 order-2 order-lg-1"
+        className: "col-lg-7 order-2 order-lg-1"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         className: "btn btn-primary",
         style: {
@@ -69217,9 +69295,9 @@ function (_React$Component) {
         },
         onClick: this.props.proceed
       }, "Back To Cart"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        onSubmit: this.submitData,
         className: "checkout-form",
-        method: "POST",
-        action: "/order"
+        method: "POST"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cf-title"
       }, "Billing Address"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69245,7 +69323,8 @@ function (_React$Component) {
         type: "radio",
         name: "pm",
         id: "two",
-        value: "different"
+        value: "different",
+        selected: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "two"
       }, "Use a different address"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69256,31 +69335,31 @@ function (_React$Component) {
         type: "text",
         name: "address",
         placeholder: "Address",
-        onChange: this.props.onValueChange
+        onChange: this.onValueChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "region",
         placeholder: "Region",
-        onChange: this.props.onValueChange
+        onChange: this.onValueChange
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "country",
         placeholder: "Country",
-        onChange: this.props.onValueChange
+        onChange: this.onValueChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "number",
         placeholder: "Phone Number",
-        onChange: this.props.onValueChange
+        onChange: this.onValueChange
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-md-6"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "text",
         name: "email",
         placeholder: "Email Address",
-        onChange: this.props.onValueChange
+        onChange: this.onValueChange
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "cf-title"
       }, "Delievery Info"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69297,7 +69376,8 @@ function (_React$Component) {
         type: "radio",
         name: "shipping",
         value: "Free",
-        id: "ship-1"
+        id: "ship-1",
+        onClick: this.onDelivery
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "ship-1"
       }, "Free")))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69312,7 +69392,8 @@ function (_React$Component) {
         type: "radio",
         name: "shipping",
         value: "2.50",
-        id: "ship-2"
+        id: "ship-2",
+        onClick: this.onDelivery
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "ship-2"
       }, "GHC2.50"))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -69326,7 +69407,7 @@ function (_React$Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "radio",
         name: "payment",
-        value: "mtnmomo",
+        value: "MTN mobile money",
         id: "pay-1"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "pay-1"
@@ -69406,8 +69487,6 @@ var RightCart = function RightCart(props) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-/* harmony import */ var prop_types__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(prop_types__WEBPACK_IMPORTED_MODULE_1__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -69428,7 +69507,6 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
-
 var RightCheckout =
 /*#__PURE__*/
 function (_React$Component) {
@@ -69441,6 +69519,28 @@ function (_React$Component) {
   }
 
   _createClass(RightCheckout, [{
+    key: "componentWillMount",
+    value: function componentWillMount() {
+      this.checkingMode();
+    }
+  }, {
+    key: "componentDidUpdate",
+    value: function componentDidUpdate() {
+      this.checkingMode();
+    }
+  }, {
+    key: "checkingMode",
+    value: function checkingMode() {
+      if (this.props.deliveryMode == 'Free') {
+        var totalValue = $('#totalValue').text();
+        $('#overallTotal').text(totalValue);
+      } else {
+        var totalValue = $('#totalValue').text().split(' ')[1];
+        var diff = totalValue - parseFloat(this.props.deliveryMode);
+        $('#overallTotal').text('GHC ' + diff);
+      }
+    }
+  }, {
     key: "render",
     value: function render() {
       var counter = 0;
@@ -69461,11 +69561,13 @@ function (_React$Component) {
         })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h6", null, " ", value.name), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", null, "GHC  ", value.price, " "));
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("ul", {
         className: "price-list"
-      }, this.props.items.map(function (value) {
-        counter = counter + value.price;
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, counter)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Shipping", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, "free")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "totalValue"
+      }, " ")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", null, "Shipping ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, this.props.deliveryMode)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("li", {
         className: "total"
-      }, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", null, counter, " ")))));
+      }, "Total", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        id: "overallTotal"
+      }, "  ")))));
     }
   }]);
 

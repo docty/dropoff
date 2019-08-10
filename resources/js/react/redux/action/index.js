@@ -34,3 +34,10 @@ export function setValueChange(value) {
         payload : value
     }
 }
+
+export function setDeliveryMode(value){
+    return {
+        type : types.DELIVERY_MODE,
+        payload : value
+    }
+}

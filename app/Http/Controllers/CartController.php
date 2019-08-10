@@ -36,25 +36,25 @@ class CartController extends Controller
 
 	public function placeOrder(Request $request)
 	{
-		$read = Cart::where('email', Auth::user()->email)->get();
-		$cover = array() ;
-		foreach ($read as $value) {
-			$list = array();
-			array_push($list, ['name' =>$value->name], ['price' =>$value->price]);
-			array_push($cover, $list);
-		}
+		// $read = Cart::where('email', Auth::user()->email)->get();
+		// $cover = array() ;
+		// foreach ($read as $value) {
+		// 	$list = array();
+		// 	array_push($list, ['name' =>$value->name], ['price' =>$value->price]);
+		// 	array_push($cover, $list);
+		// }
 
-
-		$billing = new BillingAddress();
-		$billing->email =  Auth::user()->email;
-		$billing->address = $request->address;
-		$billing->region =  $request->region;
-		$billing->country = $request->country;
-		$billing->number = $request->number;
-		$billing->shipping = $request->shipping;
-		$billing->payment = $request->payment;
-		$billing->items =  json_encode($cover);
-		$billing->save();
+		return $request->all();
+		// $billing = new BillingAddress();
+		// $billing->email =  Auth::user()->email;
+		// $billing->address = $request->address;
+		// $billing->region =  $request->region;
+		// $billing->country = $request->country;
+		// $billing->number = $request->number;
+		// $billing->shipping = $request->shipping;
+		// $billing->payment = $request->payment;
+		// $billing->items =  json_encode($cover);
+		// $billing->save();
 
 		return "Congratulation for shopping with dropoff";
 	}

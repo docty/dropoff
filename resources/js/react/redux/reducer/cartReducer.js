@@ -1,10 +1,11 @@
-import { CART, CART_CHECKOUT, CART_VALUE_CHANGE } from './../constants';
+import { CART, CART_CHECKOUT, CART_VALUE_CHANGE, DELIVERY_MODE } from './../constants';
 
 
 const initialState = {
   items: [],
   isCartShowing : true,
-  valueChange : {}
+  valueChange : [],
+  delivery : ''
 };
 
 
@@ -15,7 +16,9 @@ function cartReducer(state = initialState, action) {
     case CART_CHECKOUT:
         return {...state, isCartShowing : !state.isCartShowing};
     case CART_VALUE_CHANGE:
-        return { valueChange : {[action.payload.target.name] : action.payload.target.value}}
+        return {...state,  valueChange : [{[action.payload.target.name]: [action.payload.target.value]}]}
+        case DELIVERY_MODE:
+            return {...state,  delivery :   action.payload.target.value}
     default:
       return state;
   }

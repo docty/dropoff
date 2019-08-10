@@ -3,3 +3,4 @@ export const CATEGORY = 'Category';
 export const CART = 'Cart';
 export const CART_CHECKOUT = 'CartCheckout';
 export const CART_VALUE_CHANGE = 'CartValueChange'
+export const DELIVERY_MODE = 'DeliveryMode'
